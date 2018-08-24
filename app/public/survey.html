@@ -301,7 +301,7 @@
                 $("#error-message").css('display', 'none');
                 name = name.trim();
                 photoUrl = photoUrl.trim();
-                var questionArray = [
+                var questions = [
                     $('input[name="questionOne"]:checked').val(),
                     $('input[name="questionTwo"]:checked').val(),
                     $('input[name="questionThree"]:checked').val(),
@@ -312,12 +312,12 @@
                     $('input[name="questionEight"]:checked').val(),
                     $('input[name="questionNine"]:checked').val(),
                     $('input[name="questionTen"]:checked').val()
-                ];
-
+                ].join(',');
+                console.log(questions);
                 var newPerson = {
                     name: name,
                     photo: photoUrl,
-                    scores: questionArray
+                    questions: questions
                 };
 
                 $.post('/api/friends', newPerson, function(data) {
@@ -325,6 +325,7 @@
                     var name = $('<h6>').html(data.name);
                     var picture = $('<img>').attr('src', data.photo);
                     console.log(picture);
+                    $('.modal-body').html('');
                     $('.modal-body').append(name).append(picture);
                     $('#exampleModal').modal('show');
                 });
